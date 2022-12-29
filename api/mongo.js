@@ -8,17 +8,19 @@ const client = new MongoClient(
 );
 
 router.get("/", async (req, res) => {
-
     try {
-        await client.connect();
-        const db = client.db("PassDb");
-        const collection = await db.collection("Pass").aggregate().toArray();
-        console.log(collection[0].name);
-        return res.json(collection[0].name);
+      await client.connect();
+      const db = client.db("PassDb");
+      const collection = await db.collection("Pass").aggregate().toArray();
+      console.log(collection[0].name);
+  
+      // Add the CORS header to the response
+      res.setHeader("Access-Control-Allow-Origin", "*");
+  
+      return res.json(collection[0].name);
     } catch (error) {
-        console.error(error);
-        return res.status(500).send("Server error");
+      console.error(error);
+      return res.status(500).send("Server error");
     }
-});
- 
+  }); 
 module.exports = router;
