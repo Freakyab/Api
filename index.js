@@ -24,8 +24,8 @@ const cors = require("cors");
 //   }
 // });
 
-app.use("/api/mongo", mongo);
 app.use(cors());
+app.use("/api/mongo", mongo);
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
