@@ -23,7 +23,7 @@ const app = express();
 //   }
 // });
 
-app.use("/api", mongo);
+app.use("/api/mongo", mongo);
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
