@@ -2,6 +2,7 @@ const express = require("express");
 const mongo = require("./api/mongo");
 const PORT = process.env.PORT || 5000;
 const app = express();
+const cors = require("cors");
 // const { MongoClient } = require("mongodb");
 // const router = express.Router();
 
@@ -24,6 +25,7 @@ const app = express();
 // });
 
 app.use("/api/mongo", mongo);
+app.use(cors());
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
