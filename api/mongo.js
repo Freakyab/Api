@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
         const db = client.db("PassDb");
         const collection = await db.collection("Pass").aggregate().toArray();
         console.log(collection[0].name);
-        return res.json(collection[0].name);
+        return res.json(collection);
         // return res.json(collection);
     } catch (error) {
         console.error(error);
