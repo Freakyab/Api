@@ -2,9 +2,9 @@
 const { MongoClient } = require("mongodb");
 const express = require("express");
 const router = express.Router();
-
+require('dotenv').config();
 const client = new MongoClient(
-    "mongodb+srv://DynamicA:D0j3iO5c23I9Lmbo@cluster0.wxp0mkv.mongodb.net/?retryWrites=true&w=majority"
+    process.env.DB_URL
 );
 
 router.get("/", async (req, res) => {
@@ -21,5 +21,5 @@ router.get("/", async (req, res) => {
         return res.status(500).send("Server error");
     }
 });
- 
+
 module.exports = router;
