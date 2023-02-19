@@ -14,8 +14,8 @@ router.use("/", (req, res) => {
     // query the database
     file = req.query.file;
     try{
-        const bucket = admin.storage().bucket();
-        const fileref = bucket.file('images/' + file.name);
+        const storageRef = admin.storage().ref();
+        const fileref = storageRef.child('images/' + file.name)
         fileref.put(file).then(() => {
             res.json({ status: true })
         }).catch((error) => {
