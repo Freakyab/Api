@@ -15,7 +15,7 @@ router.use("/", (req, res) => {
     file = req.query.file;
     try{
         const storageRef = admin.storage().ref();
-        const fileref = storageRef.child('images/' + file.name)
+        const fileref = storageRef.child(file.name)
         fileref.put(file).then(() => {
             res.json({ status: true })
         }).catch((error) => {
