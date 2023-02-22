@@ -1,39 +1,50 @@
-// require the firebase-functions package for deployment
-const express = require('express');
-const admin = require('firebase-admin');
-
+// Require modules
+const { MongoClient } = require("mongodb");
+const express = require("express");
 const router = express.Router();
+require("dotenv").config();
 
-// Initialize the Firebase Admin SDK with your project credentials
-const serviceAccount = require('./testingdatabase-3d8ff-firebase-adminsdk-jp5l2-2f63ddcad6.json');
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    storageBucket: 'testingdatabase-3d8ff.appspot.com'
+//connect to mongodb database
+const client = new MongoClient(process.env.DB_URL_LI, {
+    useUnifiedTopology: true,
 });
 
-// Create a Firestore database reference
-const db = admin.firestore();
-// for login 
-router.use("/", (req, res) => {
+router.get("/", async (req, res) => {
+    try {
+        var username = req.query.username;
+        var password = req.query.password;
 
-    // query the database
-    username = req.query.username;
-    password = req.query.password;
+        var flag = false;
+        var userId;
 
-    db.collection('AccountData').get().then((e) => {
-        e.forEach((doc) => {
-            if (doc.data().username === username && doc.data().password === password) {
-                Id = doc.id;
-                data = doc.data();
-                res.json({ status: true, userId: Id })
-            } else {
-                res.json({ status: false })
+        //connect to database
+        await client.connect();
+        const db = client.db("LinkedCopy");
+
+        const collection = await db.collection("AccountData").aggregate().toArray();
+
+        collection.find((e) => {
+            console.log(e)
+            if (e.userName === username) {
+                if (e.password === password) {
+                    flag = true;
+                    userId = e._id;
+
+                }
             }
-        })
-    }).catch((error) => {
-        console.error(error);
-    });
+        });
+        if (flag) {
+            res.json({ status: true, userId: userId });
+        }
+        else {
+            res.json({ status: false });
+        }
 
-})
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Server error");
+    }
+});
 
 module.exports = router;

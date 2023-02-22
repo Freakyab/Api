@@ -5,7 +5,8 @@ const ProjectData = require("./api/ProjectData");
 
 // LinkedinCopy
 const login = require("./Linkedin/login");
-const upload = require("./Linkedin/upload");
+const signup = require("./Linkedin/signup")
+const post = require("./Linkedin/post");
 
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -16,7 +17,9 @@ app.use("/api/ProjectData", ProjectData);
 
 // LinkedinCopy
 app.use("/Linkedin/login", login);
-app.use("/linkedin/link", upload);
+app.use("/linkedin/signup", signup);
+app.use("/linkedin/post", post);
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
