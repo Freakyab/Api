@@ -74,7 +74,7 @@ router.get("/", async (req, res) => {
 
         if (delete postCount[deleteKeys.length + 1]) {
             fire = await renameFiles(fire, bucket, folderName);
-            Post = postCount;
+            // Post = postCount;
             if (Collection.updateMany(
                 { _id: ObjectId(userId) },
                 { $set: { post: Post } }
@@ -82,7 +82,8 @@ router.get("/", async (req, res) => {
             )
                 mongo = true;
             if (fire && mongo)
-                res.json({ status: true, post: Post })
+                console.log(Post);
+                // res.json({ status: true, post: Post })
             else
                 res.json({ status: false })
         }

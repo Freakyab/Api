@@ -38,6 +38,7 @@ router.get("/", async (req, res) => {
             
         }
         const postCount = Post[0];
+        console.log(postCount)
         if (flag && postCount[filename])
             res.json({ status: true, post: Post,userId:userId })
         else
