@@ -71,10 +71,9 @@ router.get("/", async (req, res) => {
         deleteKeys.map((e, index) => {
             postCount[index + 1] = values[index];
         })
-
-        if (delete postCount[deleteKeys.length + 1]) {
-            fire = await renameFiles(fire, bucket, folderName);
-            // Post = postCount;
+        if (deleteKeys.length === 1)
+        {
+            Post = 0;
             if (Collection.updateMany(
                 { _id: ObjectId(userId) },
                 { $set: { post: Post } }
@@ -83,7 +82,23 @@ router.get("/", async (req, res) => {
                 mongo = true;
             if (fire && mongo)
             {
-                console.log(Post);
+                res.json({ status: true, post: Post })
+            }
+            else
+                res.json({ status: false })
+        }
+        else
+        if (delete postCount[deleteKeys.length + 1] ) {
+            fire = await renameFiles(fire, bucket, folderName);
+            
+            if (Collection.updateMany(
+                { _id: ObjectId(userId) },
+                { $set: { post: Post } }
+            )
+            )
+                mongo = true;
+            if (fire && mongo)
+            {
                 res.json({ status: true, post: Post })
             }    
             else
@@ -92,9 +107,6 @@ router.get("/", async (req, res) => {
         else {
             res.json({ status: false })
         }
-
-        // console.log(postCount);
-
 
         // Return the array of file names as a response to the client
     } catch (error) {
