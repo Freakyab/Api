@@ -82,8 +82,10 @@ router.get("/", async (req, res) => {
             )
                 mongo = true;
             if (fire && mongo)
+            {
                 console.log(Post);
-                // res.json({ status: true, post: Post })
+                res.json({ status: true, post: Post })
+            }    
             else
                 res.json({ status: false })
         }
