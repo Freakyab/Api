@@ -1,4 +1,4 @@
-const { MongoClient,ObjectId } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 const express = require('express');
 const router = express.Router();
 require("dotenv").config();
@@ -28,6 +28,8 @@ router.get("/", async (req, res) => {
         const folderName = `image/${userId}`;
         var fire = false;
         var mongo = false;
+        var flag = false;
+        var isSame = false;
 
         async function renameFiles(flag, bucket, folderName) {
             const [files] = await bucket.getFiles({
@@ -57,58 +59,61 @@ router.get("/", async (req, res) => {
             }
         })
 
-        const postCount = Post[0];
-        const keys = Object.keys(postCount).map(key => parseInt(key)).sort((a, b) => a - b);
-        const deleteKey = keys[deletePost - 1];
-        delete postCount[deleteKey];
-
-        var deleteKeys = Object.keys(postCount).map(key => parseInt(key)).sort((a, b) => a - b);
-
-        // console.log(deleteKeys.length);
-
-        values = Object.values(postCount);
-
-        deleteKeys.map((e, index) => {
-            postCount[index + 1] = values[index];
-        })
-        if (deleteKeys.length === 1)
-        {
+        if (Post.length === 0) {
             Post = 0;
             if (Collection.updateMany(
                 { _id: ObjectId(userId) },
                 { $set: { post: Post } }
-            )
-            )
+            ))
                 mongo = true;
-            if (fire && mongo)
-            {
-                res.json({ status: true, post: Post })
+            if (fire && mongo) {
+                flag = true;
             }
             else
-                res.json({ status: false })
-        }
-        else
-        if (delete postCount[deleteKeys.length + 1] ) {
-            fire = await renameFiles(fire, bucket, folderName);
-            
-            if (Collection.updateMany(
-                { _id: ObjectId(userId) },
-                { $set: { post: Post } }
-            )
-            )
-                mongo = true;
-            if (fire && mongo)
-            {
-                res.json({ status: true, post: Post })
-            }    
-            else
-                res.json({ status: false })
-        }
-        else {
-            res.json({ status: false })
-        }
+                flag = false;
+        } else {
+            const postCount = Post[0];
+            const keys = Object.keys(postCount).map(key => parseInt(key)).sort((a, b) => a - b);
+            value1 = Object.values(postCount);
+            const deleteKey = keys[deletePost - 1];
+            delete postCount[deleteKey];
 
-        // Return the array of file names as a response to the client
+            var deleteKeys = Object.keys(postCount).map(key => parseInt(key)).sort((a, b) => a - b);
+            values = Object.values(postCount);
+
+            deleteKeys.map((e, index) => {
+                postCount[index + 1] = values[index];
+            })
+            
+            if(keys.length ===1 && deleteKeys.length === 0) {
+                Post = 0;
+                Collection.updateMany(
+                    { _id: ObjectId(userId) },
+                    { $set: { post: Post } })
+                flag = true;
+            }
+            else {
+                if (delete postCount[deleteKeys.length + 1]) {
+                    fire = await renameFiles(fire, bucket, folderName);
+
+                    if (Collection.updateMany(
+                        { _id: ObjectId(userId) },
+                        { $set: { post: Post } }))
+                    mongo = true;
+                    if (fire && mongo) {
+                        flag = true;
+                    }
+                    else
+                        flag = false;
+                }
+            }
+            if (flag) {
+                res.json({ status: true, post: Post })
+            } else {
+                res.json({ status: false })
+            }
+
+        }
     } catch (error) {
         console.error(error);
         return res.status(500).send("Server error");
