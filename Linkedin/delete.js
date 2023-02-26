@@ -59,7 +59,7 @@ router.get("/", async (req, res) => {
             }
         })
 
-        if (Post.length === 0) {
+        if (Post === 0) {
             Post = 0;
             if (Collection.updateMany(
                 { _id: ObjectId(userId) },
@@ -72,20 +72,35 @@ router.get("/", async (req, res) => {
             else
                 flag = false;
         } else {
-            const postCount = Post[0];
-            const keys = Object.keys(postCount).map(key => parseInt(key)).sort((a, b) => a - b);
-            value1 = Object.values(postCount);
-            const deleteKey = keys[deletePost - 1];
-            delete postCount[deleteKey];
+            const CationCount = Post[0];
+            const LikeCount = Post[1];
 
-            var deleteKeys = Object.keys(postCount).map(key => parseInt(key)).sort((a, b) => a - b);
-            values = Object.values(postCount);
-
-            deleteKeys.map((e, index) => {
-                postCount[index + 1] = values[index];
-            })
+            const keys = Object.keys(CationCount).map(key => parseInt(key)).sort((a, b) => a - b);
+            const LikeKeys = Object.keys(LikeCount).map(key => parseInt(key)).sort((a, b) => a - b);
             
-            if(keys.length ===1 && deleteKeys.length === 0) {
+
+            const DeleteCaptionKey = keys[deletePost - 1];
+            const deleteLikeKey = LikeKeys[deletePost - 1];
+
+            delete CationCount[DeleteCaptionKey];
+            delete LikeCount[deleteLikeKey];
+
+            var DeleteCaptionKeys = Object.keys(CationCount).map(key => parseInt(key)).sort((a, b) => a - b);
+            var deleteLikeKeys = Object.keys(LikeCount).map(key => parseInt(key)).sort((a, b) => a - b);
+
+
+            values = Object.values(CationCount);
+            LikeValues = Object.values(LikeCount);
+
+            DeleteCaptionKeys.map((e, index) => {
+                CationCount[index + 1] = values[index];
+            })
+            deleteLikeKeys.map((e, index) => {
+                LikeCount[index + 1] = LikeValues[index];
+            })
+
+            
+            if(keys.length ===1 && DeleteCaptionKeys.length === 0) {
                 Post = 0;
                 Collection.updateMany(
                     { _id: ObjectId(userId) },
@@ -93,7 +108,10 @@ router.get("/", async (req, res) => {
                 flag = true;
             }
             else {
-                if (delete postCount[deleteKeys.length + 1]) {
+
+                delete CationCount[DeleteCaptionKeys.length + 1]
+                delete LikeCount[deleteLikeKeys.length + 1]
+
                     fire = await renameFiles(fire, bucket, folderName);
 
                     if (Collection.updateMany(
@@ -106,7 +124,7 @@ router.get("/", async (req, res) => {
                     else
                         flag = false;
                 }
-            }
+            
             if (flag) {
                 res.json({ status: true, post: Post })
             } else {

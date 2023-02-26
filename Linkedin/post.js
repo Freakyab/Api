@@ -14,10 +14,14 @@ router.get("/", async (req, res) => {
     try {
         const userId = req.query.userId;
         const caption = req.query.caption;
+        const like = req.query.like;
+
         await client.connect();
         const db = client.db("LinkedCopy");
         const Collection = await db.collection("UserData");
         const collection = await db.collection("UserData").aggregate().toArray();
+
+        flag = true;
 
         collection.map((item) => {
             if (item._id.toString() == userId) {
@@ -25,21 +29,25 @@ router.get("/", async (req, res) => {
             }
         });
         captionItem = {}
-        // console.log(captionItem);
+        likeRef = {}
+        
         if (Post === 0) {
             captionItem[1] = caption
-            Post = [
-                captionItem
-            ]
+            likeRef[1] = parseInt(like);
+            Post = [captionItem, likeRef]
+
         }
         else {
-            const postCount = Post[0];
-            const keys = Object.keys(postCount).map(key => parseInt(key)).sort((a, b) => a - b);
-            const nextKey = keys[keys.length - 1] + 1;
+            const CationCount = Post[0];
+            const LikeCount = Post[1];
+            const CaptionKeys = Object.keys(CationCount).map(key => parseInt(key)).sort((a, b) => a - b);
+            const nextKey = CaptionKeys[CaptionKeys.length - 1] + 1;
+            CationCount[nextKey] = caption; // add a new key-value pair to the object
             
-            postCount[nextKey] = caption; // add a new key-value pair to the object
-            console.log(Post); 
-
+            const CaptionKeysLike = Object.keys(LikeCount).map(key => parseInt(key)).sort((a, b) => a - b);
+            const nextKeyLike =parseInt( CaptionKeysLike[CaptionKeysLike.length - 1] )+ 1;
+            console.log(nextKeyLike)
+                LikeCount[nextKeyLike] = [];
         }
         if (
             Collection.updateMany(

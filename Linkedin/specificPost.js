@@ -26,6 +26,7 @@ router.get("/", async (req, res) => {
         collection.find((e) => {
             if (e.userName === username) {
                     flag = true;
+                    console.log("found");
                     userId = e._id;
             }
         });
@@ -33,13 +34,14 @@ router.get("/", async (req, res) => {
             userDatacollection.find((e)=>{
                 if(e._id.toString() == userId){
                     Post = e.post;
+                    console.log(Post)
                 }
             })
             
         }
-        const postCount = Post[0];
-        console.log(postCount)
-        if (flag && postCount[filename])
+        const CationCount = Post[0];
+        console.log(CationCount)
+        if (flag && CationCount[filename])
             res.json({ status: true, post: Post,userId:userId })
         else
             res.json({ status: false })
