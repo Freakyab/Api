@@ -22,7 +22,7 @@ router.get("/", async (req, res) => {
         var LikeUsername;
         var isExists = false;
         var flag = false;
-        var LikedArray = []
+        var LikedArray = [];
 
         //connect to database
         await client.connect();
@@ -50,9 +50,7 @@ router.get("/", async (req, res) => {
 
         
             if (like === 1) {
-                console.log(LikedArray.length)
-                if (LikedArray.length === 0||LikedArray.length === undefined) {
-                    console.log(LikeUsername)
+                if (LikedArray.length === 0 || LikedArray.length === undefined) {
                     LikeCount[index] = [LikeUsername];
                     flag = true;
                 } else {

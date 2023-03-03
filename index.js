@@ -11,6 +11,7 @@ const returnData = require("./Linkedin/return")
 const SpecificPost = require("./Linkedin/specificPost")
 const deletePost = require("./Linkedin/delete")
 const like = require("./Linkedin/like")
+const feed = require("./Linkedin/feed")
 
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -27,6 +28,7 @@ app.use("/linkedin/returnData", returnData);
 app.use("/linkedin/specificPost", SpecificPost);
 app.use("/linkedin/deletePost", deletePost);
 app.use("/linkedin/like", like)
+app.use("/linkedin/feed", feed)
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
