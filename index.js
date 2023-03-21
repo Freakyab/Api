@@ -13,6 +13,16 @@ const deletePost = require("./Linkedin/delete")
 const like = require("./Linkedin/like")
 const feed = require("./Linkedin/feed")
 
+// /Testing
+const Login = require("./TestingData/Login");
+const Signup = require("./TestingData/Signup");
+const Post = require("./TestingData/Post");
+const DeletePost = require("./TestingData/DeletePost");
+const Like = require("./TestingData/Like");
+const ProfileFeed = require("./TestingData/ProfileFeed");
+const Feed = require("./TestingData/Feed");
+const gawali = require("./TestingData/gawali")
+
 const PORT = process.env.PORT || 5000;
 const app = express();
 
@@ -29,6 +39,16 @@ app.use("/linkedin/specificPost", SpecificPost);
 app.use("/linkedin/deletePost", deletePost);
 app.use("/linkedin/like", like)
 app.use("/linkedin/feed", feed)
+
+// Testing
+app.use("/Testing/Login", Login);
+app.use("/Testing/Signup", Signup);
+app.use("/Testing/Post", Post);
+app.use("/Testing/DeletePost", DeletePost);
+app.use("/Testing/Like", Like);
+app.use("/Testing/ProfileFeed", ProfileFeed);
+app.use("/Testing/Feed", Feed);
+app.use("/gawali",gawali)
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
