@@ -21,12 +21,11 @@ const DeletePost = require("./TestingData/DeletePost");
 const Like = require("./TestingData/Like");
 const ProfileFeed = require("./TestingData/ProfileFeed");
 const Feed = require("./TestingData/Feed");
-const gawali = require("./TestingData/gawali")
 
 const PORT = process.env.PORT || 5000;
 const app = express();
 
-app.use(cors());
+// app.use(cors());
 app.use("/api/mongo", mongo);
 app.use("/api/ProjectData", ProjectData);
 
@@ -48,7 +47,6 @@ app.use("/Testing/DeletePost", DeletePost);
 app.use("/Testing/Like", Like);
 app.use("/Testing/ProfileFeed", ProfileFeed);
 app.use("/Testing/Feed", Feed);
-app.use("/gawali",gawali)
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
