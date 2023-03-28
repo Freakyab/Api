@@ -5,7 +5,7 @@ const router = express.Router();
 require("dotenv").config();
 
 //connect to mongodb database
-const client = new MongoClient(process.env.DB_URL_LI, {
+const client = new MongoClient(process.env.DB_URL, {
     useUnifiedTopology: true,
 });
 
@@ -25,7 +25,7 @@ router.get("/", async (req, res) => {
 
         collection.find((e) => {
             if (e.username === username) {
-                if (e.password === password) {
+                if (e.password === parseInt( password)) {
                     flag = true;
                     userId = e._id;
 

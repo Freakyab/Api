@@ -25,7 +25,7 @@ const Feed = require("./TestingData/Feed");
 const PORT = process.env.PORT || 5000;
 const app = express();
 
-// app.use(cors());
+app.use(cors());
 app.use("/Admin/login", adminLogin);
 // app.use("/api/ProjectData", ProjectData);
 
