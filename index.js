@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const adminLogin = require("./Admin/login");
-// const ProjectData = require("./api/ProjectData");
+const ProjectData = require("./Admin/ProjectData");
 
 // LinkedinCopy
 const login = require("./Linkedin/login");
@@ -27,7 +27,7 @@ const app = express();
 
 app.use(cors());
 app.use("/Admin/login", adminLogin);
-// app.use("/api/ProjectData", ProjectData);
+app.use("/Admin/ProjectData", ProjectData);
 
 // LinkedinCopy
 app.use("/Linkedin/login", login);
