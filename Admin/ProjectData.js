@@ -8,19 +8,34 @@ const client = new MongoClient(process.env.DB_URL);
 router.get("/", async (req, res) => {
 
     try {
-        const items = req.query.items;
+        var items = req.query.items;
+        items = JSON.parse(items);
+        if (items[0] == 0) {
+            items = items.slice(1, items.length);
+        }
         await client.connect();
         const db = client.db("PassDb");
         const collection = await db.collection("ProjectData");
-        if(collection.insertOne({items }))
-            res.json({ status: true });
-        else
-            res.json({ status: false });
+        let flag = false;
+        await collection.deleteMany({});
+        for (const item of items) {
+            if (item != false) {
+                await collection.insertOne({ items: item });
+                flag = true;
 
+            }
+        }
+
+
+        if (flag) {
+            res.json({ status: true, msg: "inserted"  });
+        } else {
+            res.json({ status: false});
+        }
     } catch (error) {
         console.error(error);
         return res.status(500).send("Server error");
     }
 });
- 
+
 module.exports = router;
