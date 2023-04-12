@@ -9,7 +9,7 @@ const client = new MongoClient(process.env.DB_URL, {
     useUnifiedTopology: true,
 });
 
-router.get("/", async (req, res) => {
+router.post("/", async (req, res) => {
     try {
         var username = req.query.username;
         var password = req.query.password;

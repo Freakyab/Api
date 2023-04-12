@@ -3,6 +3,7 @@ const cors = require("cors");
 const adminLogin = require("./Admin/login");
 const ProjectData = require("./Admin/ProjectData");
 const sendData = require("./Admin/sendData");
+const feedback = require("./Admin/feedback");
 
 // LinkedinCopy
 const login = require("./Linkedin/login");
@@ -27,9 +28,11 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 
 app.use(cors());
+app.use(express.json());
 app.use("/Admin/login", adminLogin);
 app.use("/Admin/ProjectData", ProjectData);
 app.use("/Admin/sendData", sendData);
+app.use("/Admin/feedback", feedback);
 
 // LinkedinCopy
 app.use("/Linkedin/login", login);
