@@ -7,7 +7,6 @@ require('dotenv').config();
 const client = new MongoClient(process.env.DB_URL);
 
 router.post("/", async (req, res) => {
-
     try {
         var items = req.query.items;
         items = JSON.parse(items);
