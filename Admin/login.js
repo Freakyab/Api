@@ -10,10 +10,8 @@ const client = new MongoClient(process.env.DB_URL, {
 });
 
 router.post("/", async (req, res) => {
+    const { username, password } = req.body;
     try {
-        var username = req.query.username;
-        var password = req.query.password;
-
         var flag = false;
         var userId;
 
