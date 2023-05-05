@@ -24,11 +24,15 @@ const Like = require("./TestingData/Like");
 const ProfileFeed = require("./TestingData/ProfileFeed");
 const Feed = require("./TestingData/Feed");
 
+// Spotify 
+const Spotify = require("./Spotify/sendData");
+
 const PORT = process.env.PORT || 5000;
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.send("Hello World");
 app.use("/Admin/login", adminLogin);
 app.use("/Admin/ProjectData", ProjectData);
 app.use("/Admin/sendData", sendData);
@@ -52,6 +56,9 @@ app.use("/Testing/DeletePost", DeletePost);
 app.use("/Testing/Like", Like);
 app.use("/Testing/ProfileFeed", ProfileFeed);
 app.use("/Testing/Feed", Feed);
+
+// Spotify
+app.use("/Spotify/sendData", Spotify);
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
