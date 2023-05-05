@@ -32,7 +32,6 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.send("Hello World");
 app.use("/Admin/login", adminLogin);
 app.use("/Admin/ProjectData", ProjectData);
 app.use("/Admin/sendData", sendData);
