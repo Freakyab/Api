@@ -25,7 +25,7 @@ const ProfileFeed = require("./TestingData/ProfileFeed");
 const Feed = require("./TestingData/Feed");
 
 // Spotify 
-const Spotify = require("./Spotify/sendData");
+const Spotify = require("./spotify/sendData");
 
 const PORT = process.env.PORT || 5000;
 const app = express();
