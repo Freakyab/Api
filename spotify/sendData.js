@@ -1,9 +1,9 @@
-const jwt = require("jsonwebtoken");
 const express = require("express");
+const jwtmod = require("jsonwebtoken");
 const router = express.Router();
 require('dotenv').config();
 
-router.post("/", async (req, res) => {
+router.get("/", async (req, res) => {
     try {
         const bearerHeader = req.headers["authorization"];
         const token = bearerHeader && bearerHeader.split(" ")[1];
@@ -14,9 +14,9 @@ router.post("/", async (req, res) => {
         const decodedToken = jwtmod.verify(token, public_key, {
             algorithms: ["RS256"],
         });
-
-        const { email } = decodedToken;
-        res.status(200).send(email);
+        const { name } = decodedToken;
+        console.log(name);
+        res.status(200).json({name});
     } catch (err) {
         res.status(500).send(err);
     }

@@ -57,7 +57,7 @@ app.use("/Testing/ProfileFeed", ProfileFeed);
 app.use("/Testing/Feed", Feed);
 
 // Spotify
-app.use("/Spotify/sendData", Spotify);
+app.use("/Spotify", Spotify);
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
