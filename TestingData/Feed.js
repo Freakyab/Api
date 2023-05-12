@@ -12,19 +12,25 @@ const client = new MongoClient(process.env.DB_URL_LI, {
 router.get("/", async (req, res) => {
     try {
         const nofData = req.query.no;
+        const render = req.query.render;
+        if(render === "true") return;
         var flag = false;
         var lessData = false;
         
-        var Post;
         var feedData = [];
+        let userId = [];
         //connect to database
         await client.connect();
         const db = client.db("Testing");
         const collection = await  db.collection("PostData").aggregate().toArray();
+        collection.sort((a, b) => {
+            return Math.random() - 0.5;
+        })
         
         if(collection.length < nofData){
             for (let i = 0; i < collection.length; i++) {
                 feedData.push(collection[i]);
+                userId.push(`${collection[i].userId} ${collection[i]._id}`);
             }
             lessData = true;
             flag = true;
@@ -32,7 +38,9 @@ router.get("/", async (req, res) => {
         else{
             for (let i = 0; i < nofData; i++) {
                 feedData.push(collection[i]);
+                userId.push(`${collection[i].userId} ${collection[i]._id}`);
             }
+
             flag = true;
         }        
 
@@ -41,7 +49,7 @@ router.get("/", async (req, res) => {
         })
 
         if (flag) {
-            res.json({ status: true, post: feedData, lessData: lessData});
+            res.json({ status: true, post: feedData, lessData: lessData, userId: userId });
         }
         else {
             res.json({ status: false });

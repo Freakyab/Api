@@ -1,7 +1,7 @@
 const { MongoClient, ObjectId } = require("mongodb");
 const express = require("express");
 const router = express.Router();
-const data = require("./data");
+// const data = require("./data");
 require("dotenv").config();
 
 //connect to mongodb database
@@ -9,11 +9,9 @@ const client = new MongoClient(process.env.DB_URL_LI, {
     useUnifiedTopology: true,
 });
 
-router.get("/", async (req, res) => {
+router.post("/", async (req, res) => {
     try {
-        const userId = req.query.userId;
-
-
+        const { userId } = req.body;
         var flag = false;
         
         var Post;
@@ -27,6 +25,7 @@ router.get("/", async (req, res) => {
         
         Collection.find((e) => {
             if (e._id.toString() === userId) {
+                console.log(e.post)
                 Post = e.post;
             }
         })
@@ -38,6 +37,8 @@ router.get("/", async (req, res) => {
                 if (Post.includes(e._id.toString())) {
                     feedData.push(e);
                 }
+                else
+                    msg = "null data";
             })
             flag = true;
         }

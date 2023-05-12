@@ -9,11 +9,9 @@ const client = new MongoClient(process.env.DB_URL_LI, {
     useUnifiedTopology: true,
 });
 
-router.get("/", async (req, res) => {
+router.delete("/", async (req, res) => {
     try {
-        const postId = req.query.postId;
-        const userId = req.query.userId;
-
+        const { userId, postId } = req.body;
         var flag = false;
         var deleteFlag = false;
         var Post;

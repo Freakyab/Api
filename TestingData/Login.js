@@ -13,10 +13,9 @@ router.get("/", async (req, res) => {
     try {
         var username = req.query.username;
         var password = req.query.password;
-
         var flag = false;
         var userId;
-
+        var name;
         //connect to database
         await client.connect();
         const db = client.db("Testing");
@@ -25,15 +24,16 @@ router.get("/", async (req, res) => {
 
         collection.find((e) => {
             if (e.userName === username) {
+                
                 if (e.password === password) {
                     flag = true;
                     userId = e._id;
-
+                    name = e.name;
                 }
             }
         });
         if (flag) {
-            res.json({ status: true, userId: userId });
+            res.json({ status: true, userId: userId,name : name });
         }
         else {
             res.json({ status: false });

@@ -9,22 +9,22 @@ const client = new MongoClient(process.env.DB_URL_LI, {
     useUnifiedTopology: true,
 });
 
-router.get("/", async (req, res) => {
+router.post("/", async (req, res) => {
+    const { userId,postId } = req.body;
+    console.log(userId,postId);
     try {
-        const postId = req.query.postId;
-        const userId = req.query.userId;
-
-
-        var flag = false;
+        if (userId == null || postId == null) {
+            return res.json({ status: false, message: "null data" });
+        }
+        let flag = false;
         
-        var Like;
-        var Post;
+        let Like;
 
         //connect to database
         await client.connect();
         const db = client.db("Testing");
         const postCollection = await db.collection("PostData").aggregate().toArray();
-        const collection = await  db.collection("PostData");
+        const collection = db.collection("PostData");
 
         postCollection.find((e) => {
             if (e._id.toString() === postId) {

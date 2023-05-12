@@ -23,6 +23,7 @@ const DeletePost = require("./TestingData/DeletePost");
 const Like = require("./TestingData/Like");
 const ProfileFeed = require("./TestingData/ProfileFeed");
 const Feed = require("./TestingData/Feed");
+const share = require("./TestingData/share")
 
 // Spotify 
 const Spotify = require("./spotify/sendData");
@@ -54,7 +55,8 @@ app.use("/Testing/Post", Post);
 app.use("/Testing/DeletePost", DeletePost);
 app.use("/Testing/Like", Like);
 app.use("/Testing/ProfileFeed", ProfileFeed);
-app.use("/Testing/Feed", Feed);
+app.use("/Testing/Feed", Feed); 
+app.use("/Testing/share", share); 
 
 // Spotify
 app.use("/Spotify", Spotify);

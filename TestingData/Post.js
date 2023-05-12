@@ -1,4 +1,4 @@
-const { MongoClient,ObjectId } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 const express = require("express");
 const router = express.Router();
 const data = require("./data");
@@ -9,11 +9,12 @@ const client = new MongoClient(process.env.DB_URL_LI, {
     useUnifiedTopology: true,
 });
 
-router.get("/", async (req, res) => {
+router.post("/", async (req, res) => {
+        const { caption, userId } = req.body;
     try {
-        const caption = req.query.caption;
-        const userId = req.query.userId;
-
+        if (caption === undefined || userId === undefined || caption === "" || userId === "" || caption === null || userId === null) {
+            return res.json({ status: false });
+        }
         var flag = false;
         var insertFlag = false;
 
@@ -30,11 +31,12 @@ router.get("/", async (req, res) => {
 
         const respond = await collection.insertOne(
             {
-                name : name,
+                name: name,
                 caption: caption,
                 like: [],
                 comment: [],
-                time: date,
+                time: finalDate,
+                userId: userId
             }
         )
         if (respond.insertedId != null) {
@@ -42,7 +44,6 @@ router.get("/", async (req, res) => {
         }
         if (insertFlag) {
             var Post = await data.GetData(client, "Testing", "UserData", userId);
-            console.log(Post);
             if (Post === 0) {
                 Post = [];
                 Post.push(respond.insertedId.toString());
@@ -59,7 +60,7 @@ router.get("/", async (req, res) => {
         }
 
         if (flag) {
-            res.json({ status: true,postId : respond.insertedId.toString() });
+            res.json({ status: true, postId: respond.insertedId.toString() });
         }
         else {
             res.json({ status: false });
