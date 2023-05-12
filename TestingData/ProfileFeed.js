@@ -12,6 +12,8 @@ const client = new MongoClient(process.env.DB_URL_LI, {
 router.post("/", async (req, res) => {
     const { userId } = req.body;
     try {
+        console.log(userId);
+        if(!userId) return res.json({ status: false, msg: "Invalid data" });
         let flag = false;
         
         let Post;

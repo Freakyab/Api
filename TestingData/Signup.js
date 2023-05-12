@@ -16,7 +16,7 @@ async function createData(userID, name) {
     // connect to database
     await client.connect();
     const db = client.db("Testing");
-    const collection = await db.collection("UserData");
+    const collection =  db.collection("UserData");
 
     // asign basic structure to database
     collection.insertMany([
@@ -32,15 +32,14 @@ async function createData(userID, name) {
     console.error(error);
   }
 }
-router.get("/", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
-
+    const { username, name, password, email } = req.body;
+    if(!username || !name || !password || !email){
+      return res.status(400).json({msg: "Please enter all fields"});
+    }
     // get data from request
-    const username = req.query.username;
-    const name = req.query.name;
-    const password = req.query.password;
-    const email = req.query.email;
-
+  
     // set the flag
     let isexist = 0;
 
