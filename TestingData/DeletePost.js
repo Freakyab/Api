@@ -10,18 +10,18 @@ const client = new MongoClient(process.env.DB_URL_LI, {
 });
 
 router.delete("/", async (req, res) => {
+    const { userId, postId } = req.body;
     try {
-        const { userId, postId } = req.body;
-        var flag = false;
-        var deleteFlag = false;
-        var Post;
+        let flag = false;
+        let deleteFlag = false;
+        let Post;
 
         //connect to database
         await client.connect();
         const db = client.db("Testing");
         const userCollection = await db.collection("UserData").aggregate().toArray();
-        const Collection = await db.collection("UserData");
-        const collection = await  db.collection("PostData");
+        const Collection = db.collection("UserData");
+        const collection = db.collection("PostData");
         userCollection.find((e) => {
             if (e._id.toString() === userId) {
                 Post = e.post;
@@ -54,7 +54,7 @@ router.delete("/", async (req, res) => {
             flag = true;
         }
         if (flag) {
-            res.json({ status: true});
+            res.json({ status: true });
         }
         else {
             res.json({ status: false });
@@ -63,7 +63,7 @@ router.delete("/", async (req, res) => {
 
     } catch (error) {
         console.error(error);
-        return res.status(500).send("Server error");
+        res.json({ status: false, msg: "Server error" });
     }
 });
 

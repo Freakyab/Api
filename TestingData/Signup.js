@@ -42,7 +42,7 @@ router.get("/", async (req, res) => {
     const email = req.query.email;
 
     // set the flag
-    var isexist = 0;
+    let isexist = 0;
 
     //connect to database
     await client.connect();
@@ -98,6 +98,7 @@ router.get("/", async (req, res) => {
     }
   } catch (error) {
     console.error(error);
+    res.json({ status: false, msg: "Server error" });
     return res.status(500).send("Server error");
   }
 });

@@ -11,11 +11,11 @@ const client = new MongoClient(process.env.DB_URL_LI, {
 
 router.get("/", async (req, res) => {
     try {
-        var username = req.query.username;
-        var password = req.query.password;
-        var flag = false;
-        var userId;
-        var name;
+        let username = req.query.username;
+        let password = req.query.password;
+        let flag = false;
+        let userId;
+        let name;
         //connect to database
         await client.connect();
         const db = client.db("Testing");
@@ -24,7 +24,6 @@ router.get("/", async (req, res) => {
 
         collection.find((e) => {
             if (e.userName === username) {
-                
                 if (e.password === password) {
                     flag = true;
                     userId = e._id;
@@ -42,6 +41,7 @@ router.get("/", async (req, res) => {
 
     } catch (error) {
         console.error(error);
+        res.json({ status: false, msg: "Server error" });
         return res.status(500).send("Server error");
     }
 });

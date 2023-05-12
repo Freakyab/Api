@@ -13,16 +13,20 @@ router.get("/", async (req, res) => {
     try {
         const nofData = req.query.no;
         const render = req.query.render;
-        if(render === "true") return;
-        var flag = false;
-        var lessData = false;
         
-        var feedData = [];
+        if(render === "true") return;
+        
+        let flag = false;
+        let lessData = false;
+        
+        let feedData = [];
         let userId = [];
+
         //connect to database
         await client.connect();
         const db = client.db("Testing");
         const collection = await  db.collection("PostData").aggregate().toArray();
+
         collection.sort((a, b) => {
             return Math.random() - 0.5;
         })
@@ -54,10 +58,11 @@ router.get("/", async (req, res) => {
         else {
             res.json({ status: false });
         }
-
-
+        
+        
     } catch (error) {
         console.error(error);
+        res.json({ status: false });
         return res.status(500).send("Server error");
     }
 });

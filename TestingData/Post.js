@@ -10,13 +10,15 @@ const client = new MongoClient(process.env.DB_URL_LI, {
 });
 
 router.post("/", async (req, res) => {
-        const { caption, userId } = req.body;
+    const { caption, userId } = req.body;
+
     try {
         if (caption === undefined || userId === undefined || caption === "" || userId === "" || caption === null || userId === null) {
             return res.json({ status: false });
         }
-        var flag = false;
-        var insertFlag = false;
+
+        let flag = false;
+        let insertFlag = false;
 
         //connect to database
         await client.connect();
@@ -69,6 +71,7 @@ router.post("/", async (req, res) => {
 
     } catch (error) {
         console.error(error);
+        res.json({ status: false, msg: "Server error" });
         return res.status(500).send("Server error");
     }
 });

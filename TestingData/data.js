@@ -3,7 +3,7 @@ async function GetKey (client,DBname,Collection,userName)
 {
     const db = client.db(DBname);
     const collection = await db.collection(Collection).aggregate().toArray();
-    var Id;
+    let Id;
     collection.find((e) => {
         if (e.userName === userName) {
             Id = e._id;
@@ -15,7 +15,7 @@ async function GetKey (client,DBname,Collection,userName)
 async function GetData (client,DBname,Collection,id){
     const db = client.db(DBname);
     const collection = await db.collection(Collection).aggregate().toArray();
-    var Data;
+    let Data;
     collection.find((e) => {
         if (e._id.toString() === id) {
             Data = e.post;
@@ -34,7 +34,7 @@ async function GetData (client,DBname,Collection,id){
 async function GetName (client,DBname,Collection,id){
     const db = client.db(DBname);
     const collection = await db.collection(Collection).aggregate().toArray();
-    var Data;
+    let Data;
     collection.find((e) => {
         if (e._id.toString() === id) {
             Data = e.name;

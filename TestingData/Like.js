@@ -11,13 +11,14 @@ const client = new MongoClient(process.env.DB_URL_LI, {
 
 router.post("/", async (req, res) => {
     const { userId,postId } = req.body;
-    console.log(userId,postId);
+
     try {
+
         if (userId == null || postId == null) {
             return res.json({ status: false, message: "null data" });
         }
+
         let flag = false;
-        
         let Like;
 
         //connect to database
@@ -31,6 +32,7 @@ router.post("/", async (req, res) => {
                 Like = e.like;
             }
         })
+
         const name = await data.GetName(client,"Testing","UserData",userId);
 
         if(Like.includes(name)){
@@ -52,7 +54,7 @@ router.post("/", async (req, res) => {
 
     } catch (error) {
         console.error(error);
-        return res.status(500).send("Server error");
+        res.json({ status: false, msg: "Server error" });
     }
 });
 

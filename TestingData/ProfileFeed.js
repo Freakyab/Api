@@ -10,13 +10,13 @@ const client = new MongoClient(process.env.DB_URL_LI, {
 });
 
 router.post("/", async (req, res) => {
+    const { userId } = req.body;
     try {
-        const { userId } = req.body;
-        var flag = false;
+        let flag = false;
         
-        var Post;
-        var msg;
-        var feedData = [];
+        let Post;
+        let msg;
+        let feedData = [];
         //connect to database
         await client.connect();
         const db = client.db("Testing");
@@ -25,7 +25,6 @@ router.post("/", async (req, res) => {
         
         Collection.find((e) => {
             if (e._id.toString() === userId) {
-                console.log(e.post)
                 Post = e.post;
             }
         })
@@ -54,6 +53,7 @@ router.post("/", async (req, res) => {
 
     } catch (error) {
         console.error(error);
+        res.json({ status: false, msg: "Server error" });
         return res.status(500).send("Server error");
     }
 });
