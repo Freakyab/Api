@@ -23,9 +23,11 @@
   "homepage": "https://github.com/Freakyab/Api#readme",
   "dependencies": {
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "dotenv": "^16.0.3",
     "express": "^4.17.1",
     "firebase-admin": "^11.5.0",
+    "fs": "^0.0.1-security",
     "jsonwebtoken": "^9.0.0",
     "mongodb": "^4.14.0",
     "mongoose": "^6.7.0",
