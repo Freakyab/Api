@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
     try {
         //connect to database
         await client.connect();
-        const db = client.db("LabEntry");
+        const db = client.db("miniProject");
         const collection = db.collection("student");
 
         const result = await collection.insertOne({
