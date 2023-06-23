@@ -19,7 +19,7 @@ router.get("/", async (req, res) => {
         const result = await collection.find().toArray();
 
         if(result){
-            res.json({ status: true, message: "success" });
+            res.json({ status: true, message: "success", data: result});
         }
         else{
             res.json({ status: false, msg: "Server error" });
