@@ -9,17 +9,8 @@ const client = new MongoClient(process.env.DB_URL, {
 });
 
 router.post("/", async (req, res) => {
-    const { formState } = req.body;
-
-    const { uid,
-        fullname ,
-        labno ,
-        pcno ,
-        personalLaptop ,
-        subject ,
-        semester ,
-        section ,  
-        ip } = formState;
+    console.log("hello");
+    const { uid, fullname, labno, pcno, personalLaptop, subject, semester, section, ip } = req.body;
     try {
         //connect to database
         await client.connect();
