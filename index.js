@@ -30,7 +30,8 @@ const Spotify = require("./spotify/sendData");
 
 // LabEntry (mini project )
 const getData = require("./LabEntry/getData");
-const LapRegister = require("./LabEntry/register");
+const lapRegister = require("./LabEntry/register");
+const lapLogin = require("./LabEntry/login");
 
 // Timepass
 const token = require("./Timepass/token");
@@ -71,7 +72,8 @@ app.use("/Spotify", Spotify);
 
 // LabEntry 
 app.use("/LabEntry/getData", getData);
-app.use("/LabEntry/register", LapRegister);
+app.use("/LabEntry/register", lapRegister);
+app.use("/LabEntry/login", lapLogin);
 
 // Timpass
 app.use("/token",token);
