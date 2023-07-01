@@ -4,7 +4,7 @@ const router = express.Router();
 require("dotenv").config();
 
 //connect to mongodb database
-const client = new MongoClient(process.env.DB_URL, {
+const client = new MongoClient(process.env.DB_URL_kedar, {
   useUnifiedTopology: true,
 });
 

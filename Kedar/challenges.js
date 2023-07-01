@@ -4,21 +4,21 @@ const router = express.Router();
 require("dotenv").config();
 
 //connect to mongodb database
-const client = new MongoClient(process.env.DB_URL, {
+const client = new MongoClient(process.env.DB_URL_kedar, {
   useUnifiedTopology: true,
 });
 
 router.post("/", async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { Type } = req.body;
     //connect to database
     await client.connect();
-    const db = client.db("miniProject");
-    const collection = db.collection("teacher");
+    const db = client.db("MINI-PROJECT");
+    const collection = db.collection("CHALLENGES");
 
-    const result = await collection.findOne({ username });
+    const result = await collection.find({ Type }).toArray();
 
-    if (result.password === password) {
+    if (result) {
       res.json({ status: true, message: "success", data: result });
     } else {
       res.json({

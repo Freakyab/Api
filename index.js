@@ -37,6 +37,10 @@ const lapLogin = require("./LabEntry/login");
 const token = require("./Timepass/token");
 const newToken = require("./Timepass/multiply_keys");
 
+// Kedar mini project
+const kedarChallenges = require("./Kedar/challenges");
+// const kedarLogin = require("./Kedar/login");
+
 const PORT = process.env.PORT || 5000;
 const app = express();
 
@@ -74,6 +78,10 @@ app.use("/Spotify", Spotify);
 app.use("/LabEntry/getData", getData);
 app.use("/LabEntry/register", lapRegister);
 app.use("/LabEntry/login", lapLogin);
+
+// Kedar mini project
+app.use("/Miniproject/challenges", kedarChallenges);
+// app.use("/Miniproject/login", kedarLogin);
 
 // Timpass
 app.use("/token",token);
