@@ -13,8 +13,8 @@ router.post("/", async (req, res) => {
     const { username, password } = req.body;
     //connect to database
     await client.connect();
-    const db = client.db("miniProject");
-    const collection = db.collection("teacher");
+    const db = client.db("MINI-PROJECT");
+    const collection = db.collection("Login");
 
     const result = await collection.findOne({ username });
 
