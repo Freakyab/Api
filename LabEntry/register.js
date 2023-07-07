@@ -29,8 +29,7 @@ router.post("/", async (req, res) => {
             ip,
             createdAt: new Date(),
         });
-
-        if(result.insertedCount === 1){
+        if(result.insertedId){
             res.json({ status: true, message: "success" });
         }
         else{
