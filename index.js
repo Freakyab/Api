@@ -51,6 +51,8 @@ app.use("/Admin/ProjectData", ProjectData);
 app.use("/Admin/sendData", sendData);
 app.use("/Admin/feedback", feedback);
 
+app.use('/message',require("./controller/message.controller"))
+
 // LinkedinCopy
 // app.use("/Linkedin/login", login);
 // app.use("/linkedin/signup", signup);
