@@ -8,7 +8,7 @@ const transporter = nodeMailer.createTransport({
   auth: {
     user: process.env.MAIL_USERNAME,
     pass: process.env.MAIL_PASSWORD,
-  }
+  },
 });
 
 router.post("/add", async (req, res) => {
@@ -69,22 +69,17 @@ router.post("/add", async (req, res) => {
       email,
       message,
     });
-    await userMessage.save().then(
-      transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          console.log(error);
-            res
-                .status(500)
-                .json({ isSuccess: false, message: "Internal Server Error" });
-        } else {
-            res.status(200).json({ isSuccess: true, message: "Message Sent" });
-        }
-      })
-    );
+    await userMessage.save();
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+    res.status(200).json({ isSuccess: true, message: "Message sent" });
   } catch (error) {
-    res
-      .status(500)
-      .json({ isSuccess: false, message: "Internal Server Error" });
+    res.status(500).json({ isSuccess: false, message: "Internal Server Error" });
   }
 });
 
