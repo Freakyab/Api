@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const UserMessage = require("../model/userMessage.model");
 const nodeMailer = require("nodemailer");
+require('dotenv').config();
+
 
 const transporter = nodeMailer.createTransport({
   service: "gmail",
@@ -72,11 +74,12 @@ router.post("/add", async (req, res) => {
     await userMessage.save();
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
-        console.log(error);
-      } else {
-        console.log("Email sent: " + info.response);
+        console.error(error);
+        return res.status(500).json({ isSuccess: false, message: "Error sending email" });
       }
+      console.log("Email sent: " + info.response);
     });
+    
     res.status(200).json({ isSuccess: true, message: "Message sent" });
   } catch (error) {
     res.status(500).json({ isSuccess: false, message: "Internal Server Error" });
