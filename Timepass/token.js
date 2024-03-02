@@ -146,7 +146,7 @@ const companyData = [
     website: "https://www.cocofit.in/",
     head_office_address: "Hyderabad",
     founded_on: 2019.0,
-    deal_amount: 0.00005,
+    deal_amount: 5,
     deal_equity: 5.0,
     valuation: 0.0,
     profit: 95.0,
@@ -857,4 +857,20 @@ console.log("Ranked Companies:");
 for (const company of rankedCompanies) {
   const insight = (company.score / maxScore) * 100;
   console.log(`- ${company.name} (Score: ${company.score.toFixed(2)}) Insight: ${insight.toFixed(2)}%`);
+}
+
+console.log("Ranked Companies as per lowest deal_amount and the highest deal_Equity:");
+
+rankedCompanies.sort((a, b) => {
+  // Sort by deal_amount in ascending order
+  if (a.deal_amount !== b.deal_amount) {
+    return a.deal_amount - b.deal_amount;
+  } else {
+    // If deal_amount is the same, sort by deal_equity in descending order
+    return b.deal_equity - a.deal_equity;
+  }
+});
+
+for (const company of rankedCompanies) {
+  console.log(`- ${company.name} (Deal Amount: ${company.deal_amount}, Deal Equity: ${company.deal_equity})`);
 }

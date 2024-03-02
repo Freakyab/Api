@@ -146,7 +146,7 @@ const companyData = [
     website: "https://www.cocofit.in/",
     head_office_address: "Hyderabad",
     founded_on: 2019.0,
-    deal_amount: 0.00005,
+    deal_amount: 5,
     deal_equity: 5.0,
     valuation: 0.0,
     profit: 95.0,
