@@ -88,6 +88,11 @@ app.use("/Miniproject/login", kedarLogin);
 // Timpass
 app.use("/token",token);
 app.use("/newToken",newToken);
+
+// Venture Match 
+// app.use("/ventureMatch/entrepreneur",require("./controller/ventureMatch.controller"));
+// app.use("/ventureMatch/user",require("./controller/user.controller"));
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });

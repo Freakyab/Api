@@ -106,7 +106,7 @@ const companyData = [
     founded_on: 2014.0,
     deal_amount: 30000.0,
     deal_equity: 25.0,
-    valuation: 12000.0,
+    valuation: 120000.0,
     profit: 21.0,
     revenue: 80.0,
     patents: null,
@@ -644,7 +644,7 @@ const companyData = [
     profit: 57.0,
     revenue: 700.0,
     patents:[
-        " patent1",
+        "patent1",
     ],
   },
   {
@@ -808,53 +808,3 @@ const companyData = [
     patents: null,
   },
 ];
-
-const rankingCriteria = {
-  valuation: 0.05,
-  return: 0.05,
-  de_ratio: 0.04,
-  pe_ratio: 0.03,
-  revenue: 0.03,
-  roe: 0.02,
-  royalty: 0.007,
-  trademark: 0.003,
-  book_val: 0.01,
-  patent: 0.01,
-  trademark: 0.01,
-};
-
-const calculateScore = (company) => {
-  let score = 0;
-  for (const criteria in rankingCriteria) {
-    if (criteria == "valuation") {
-      const value = company[criteria] === undefined ? 0 : company[criteria];
-      const book_val = company["book_val"] === undefined  ? 0 : company["book_val"];
-      score += (value - book_val) * 0.5 ;
-    } else if (criteria === "patent") {
-      const value = company[criteria] === undefined  ? 0 : company[criteria].length !== undefined ? company[criteria].length : 0;
-      score += value * (rankingCriteria[criteria]);
-    } else {
-      const weight = (rankingCriteria[criteria] === undefined ? 0 : rankingCriteria[criteria]);
-      const value = company[criteria] === undefined ? 0 : company[criteria];
-      score += value * weight;
-    }
-  }
-  return score;
-};
-
-// Rank the companies based on scores
-let maxScore = -Infinity;
-const rankedCompanies = companyData.map((company) => {
-  const score = calculateScore(company);
-  maxScore = Math.max(maxScore, score);
-  return { ...company, score };
-});
-
-rankedCompanies.sort((a, b) => b.score - a.score);
-
-// Print the ranked companies with insights
-console.log("Ranked Companies:");
-for (const company of rankedCompanies) {
-  const insight = (company.score / maxScore) * 100;
-  console.log(`- ${company.name} (Score: ${company.score.toFixed(2)}) Insight: ${insight.toFixed(2)}%`);
-}
