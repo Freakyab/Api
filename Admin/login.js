@@ -23,10 +23,9 @@ router.post("/", async (req, res) => {
 
         collection.find((e) => {
             if (e.username === username) {
-                if (e.password === parseInt( password)) {
+                if (e.password === parseInt(password)) {
                     flag = true;
                     userId = e._id;
-
                 }
             }
         });

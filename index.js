@@ -34,8 +34,8 @@ const lapRegister = require("./LabEntry/register");
 const lapLogin = require("./LabEntry/login");
 
 // Timepass
-const token = require("./Timepass/token");
-const newToken = require("./Timepass/multiply_keys");
+// const token = require("./Timepass/token");
+// const newToken = require("./Timepass/multiply_keys");
 
 // Kedar mini project
 const kedarChallenges = require("./Kedar/challenges");
@@ -86,8 +86,11 @@ app.use("/Miniproject/challenges", kedarChallenges);
 app.use("/Miniproject/login", kedarLogin);
 
 // Timpass
-app.use("/token",token);
-app.use("/newToken",newToken);
+// app.use("/token",token);
+// app.use("/newToken",newToken);
+
+
+app.use("/imageUploader",require("./imageUploader/controller"))
 
 // Venture Match 
 // app.use("/ventureMatch/entrepreneur",require("./controller/ventureMatch.controller"));
